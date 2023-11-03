@@ -33,6 +33,7 @@ function Login() {
   return (
     <div>
       <h1>Login</h1>
+      <Link to="/home"> home </Link>
       <form id="login" onSubmit={handleSubmit}>
         <label htmlFor="login-username">Username</label>
         <input
