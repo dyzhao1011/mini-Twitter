@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 
 //Component where users write their message and post it (store in backend)
@@ -35,22 +35,7 @@ function PostMessage() {
       charCount: count.length
     });
   }
-
-  //const date = new Date();
-
-  //let day = date.getDate();
-  //let month = date.getMonth() + 1;
-  //let year = date.getFullYear();
-  //let hour = date.getHours();
-  //let minute = date.getMinutes();
-  //let second = date.getSeconds();
-  
-  // This arrangement can be altered based on how we want the date's format to appear.
-  //let currentDate = `${day}/${month}/${year}`;
-  //let currentTime = `${hour}:${minute}:${second}`;
-  //console.log(currentDate);
-  //console.log(currentTime);  // "17-6-2022"
-
+//_______________________________________________________________________________________________________________________________________
 
     function updateDateTime() {
       // create a new `Date` object
@@ -63,7 +48,29 @@ function PostMessage() {
       document.querySelector('#datetime').textContent = currentDateTime;
     }
     setInterval(updateDateTime, 1000);
+//_______________________________________________________________________________________________________________________________________
+  let [likeNumber, setLikeNumber] = useState(0);
+  let [dislikeNumber, setDislikeNumber] = useState(0);
 
+  function handleLikeClick(){
+    return(
+      setLikeNumber(likeNumber +=1)
+    )
+  }
+  function handleDislikeClick(){
+    return(
+      setDislikeNumber(dislikeNumber +=1)
+    )
+  }
+//_______________________________________________________________________________________________________________________________________
+  const [count, setCount] = useState(0);
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `You clicked ${count} times`;
+  });
+//_______________________________________________________________________________________________________________________________________
   const postMessage = (e) => {
     //edit this
     console.log("posted message");
@@ -80,8 +87,13 @@ function PostMessage() {
           onChange={handleKeyPress}
           required
         ></input>
+        <br/><br/>
+        <button onClick={handleLikeClick}>Likes</button>
+        <h3>{likeNumber} Likes</h3>
+        <button onClick={handleDislikeClick}>Dislikes</button>
+        <h3>{dislikeNumber} Dislikes</h3>
+        <label>choose a file! </label>
         <input class="choosePhoto" type="file" name="picture"></input>
-        <input class="photoOk" type="submit" value="this is the picture!"></input>
         <label>choose a video!
           <input name="file" type="file" size="50" accept="video/*" id="file"/> 
         </label>        
@@ -95,7 +107,10 @@ function PostMessage() {
           <span id="datetime">{state.updateDateTime}</span>
         </date>
       </form>
-      <Link to="/BadWordDemo"> BadWords </Link>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
     </div>
   );
 }
